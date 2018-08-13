@@ -56,10 +56,10 @@ public final class QueryUtils {
                 String place = properties.getString("place");
 //                String time = properties.getString("time");
                 long time = properties.getLong("time");
-                Date dateTime = new Date(time);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM DD, YYYY");
-                String displayDate = dateFormat.format(dateTime);
-                Earthquake equake = new Earthquake(magnitude, place,displayDate);
+//                Date dateTime = new Date(time);
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM DD, YYYY");
+//                String displayDate = dateFormat.format(dateTime);
+                Earthquake equake = new Earthquake(magnitude, place,time);
                 earthquakes.add(equake);
             }
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
