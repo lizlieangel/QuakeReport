@@ -23,4 +23,10 @@
         android:layout_weight="1"
         android:id="@+id/date"
         tools:text="Aug 13, 2018"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/time"
+        tools:text="04:00 PM"/>
 </LinearLayout>
