@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,12 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         return displayTime;
     }
 
+    public String magnitudeFormat(double mag) {
+        DecimalFormat decimalFormatter = new DecimalFormat("0.0");
+        String displayMagnitude = decimalFormatter.format(mag);
+        return displayMagnitude;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
@@ -40,7 +48,8 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         Earthquake currentEarthquake = getItem(position);
 
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
-        magnitudeView.setText(currentEarthquake.getMagnitude());
+        String magnitude = magnitudeFormat(currentEarthquake.getMagnitude());
+        magnitudeView.setText(magnitude);
 
         String place = currentEarthquake.getLocation();
 
