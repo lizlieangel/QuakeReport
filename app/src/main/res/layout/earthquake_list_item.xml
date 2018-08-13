@@ -7,15 +7,21 @@
     android:padding="@dimen/padding">
     <TextView
         android:layout_height="wrap_content"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:id="@+id/magnitude"
-        tools:text="8.9"/>
+        android:background="@drawable/magnitude_circle"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size"
+        tools:text="8.9" />
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:id="@+id/offset"
+        android:layout_marginLeft="@dimen/margin"
         tools:text="Near the"/>
     <TextView
         android:layout_height="wrap_content"
