@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private String offset;
     private String locaton;
+    private static final String LOCATION_SEPARATOR = " of ";
 
     public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
         super(context, 0,earthquakes);
@@ -33,32 +31,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         return displayTime;
     }
 
-    public String splitLocation(String place) {
-        boolean hasOffset = place.contains("of");
-        String[] parts = place.split("^?=of");
-        if (hasOffset) {
-            offset = parts[0];
-            locaton = parts[1];
-        } else {
-            offset = "Near the";
-            locaton = place;
-        }
-        return locaton;
-    }
-
-    public String splitOffset(String place) {
-        boolean hasOffset = place.contains("of");
-        String[] parts = place.split("^?=of");
-        if (hasOffset) {
-            offset = parts[0];
-            locaton = parts[1];
-        } else {
-            offset = "Near the";
-            locaton = place;
-        }
-        return offset;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
@@ -71,10 +43,20 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         magnitudeView.setText(currentEarthquake.getMagnitude());
 
         String place = currentEarthquake.getLocation();
+
+        boolean hasOffset = place.contains(LOCATION_SEPARATOR);
+        if (hasOffset) {
+            String[] parts = place.split(LOCATION_SEPARATOR);
+            offset = parts[0] + LOCATION_SEPARATOR;
+            locaton = parts[1];
+        } else {
+            offset = getContext().getString(R.string.near_the);
+            locaton = place;
+        }
         TextView offsetView = (TextView) listItemView.findViewById(R.id.offset);
-        offsetView.setText(splitOffset(place));
+        offsetView.setText(offset);
         TextView locationView = (TextView) listItemView.findViewById(R.id.location);
-        locationView.setText(splitLocation(place));
+        locationView.setText(locaton);
 
         Date date = new Date(currentEarthquake.getTimeInMilliseconds());
 
