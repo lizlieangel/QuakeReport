@@ -52,15 +52,11 @@ public final class QueryUtils {
             for(int i = 0; i < features.length(); i ++) {
                 JSONObject earthquake = features.getJSONObject(i);
                 JSONObject properties = earthquake.getJSONObject("properties");
-//                String magnitude = properties.getString("mag");
                 double magnitude = properties.getDouble("mag");
                 String place = properties.getString("place");
-//                String time = properties.getString("time");
                 long time = properties.getLong("time");
-//                Date dateTime = new Date(time);
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM DD, YYYY");
-//                String displayDate = dateFormat.format(dateTime);
-                Earthquake equake = new Earthquake(magnitude, place,time);
+                String url = properties.getString("url");
+                Earthquake equake = new Earthquake(magnitude, place,time, url);
                 earthquakes.add(equake);
             }
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and
