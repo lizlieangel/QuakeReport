@@ -3,12 +3,12 @@ package com.example.android.quakereport;
 public class Earthquake {
     private String magnitude;
     private String location;
-    private long time;
+    private long timeInMilliseconds;
 
     public Earthquake(String magnitude, String location, long time) {
         this.magnitude = magnitude;
         this.location = location;
-        this.time = time;
+        this.timeInMilliseconds = time;
     }
 
     public String getMagnitude() {
@@ -19,7 +19,7 @@ public class Earthquake {
         return location;
     }
 
-    public long getTime() {
-        return time;
+    public long getTimeInMilliseconds() {
+        return timeInMilliseconds;
     }
 }
