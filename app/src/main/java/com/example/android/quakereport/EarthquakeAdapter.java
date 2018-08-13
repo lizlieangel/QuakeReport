@@ -1,8 +1,6 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +10,13 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+    private String offset;
+    private String locaton;
+
     public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
         super(context, 0,earthquakes);
     }
@@ -33,6 +33,32 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         return displayTime;
     }
 
+    public String splitLocation(String place) {
+        boolean hasOffset = place.contains("of");
+        String[] parts = place.split("^?=of");
+        if (hasOffset) {
+            offset = parts[0];
+            locaton = parts[1];
+        } else {
+            offset = "Near the";
+            locaton = place;
+        }
+        return locaton;
+    }
+
+    public String splitOffset(String place) {
+        boolean hasOffset = place.contains("of");
+        String[] parts = place.split("^?=of");
+        if (hasOffset) {
+            offset = parts[0];
+            locaton = parts[1];
+        } else {
+            offset = "Near the";
+            locaton = place;
+        }
+        return offset;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
@@ -44,8 +70,11 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         magnitudeView.setText(currentEarthquake.getMagnitude());
 
+        String place = currentEarthquake.getLocation();
+        TextView offsetView = (TextView) listItemView.findViewById(R.id.offset);
+        offsetView.setText(splitOffset(place));
         TextView locationView = (TextView) listItemView.findViewById(R.id.location);
-        locationView.setText(currentEarthquake.getLocation());
+        locationView.setText(splitLocation(place));
 
         Date date = new Date(currentEarthquake.getTimeInMilliseconds());
 
