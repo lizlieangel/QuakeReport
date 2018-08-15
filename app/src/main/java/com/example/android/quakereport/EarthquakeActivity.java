@@ -34,6 +34,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
     private static final String USGS_REQUEST_URL = " https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
     private EarthquakeAdapter adapter;
+    private static final int EARTHQUAKE_LOADER = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +72,20 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
-        return null;
+        return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
-
+        adapter.clear();
+        if(earthquakes != null && !earthquakes.isEmpty()) {
+            adapter.addAll(earthquakes);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<List<Earthquake>> loader) {
-
+        adapter.clear();
     }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
