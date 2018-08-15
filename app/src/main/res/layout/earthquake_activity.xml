@@ -15,4 +15,10 @@
         android:layout_centerInParent="true"
         android:id="@+id/empty_view"
         android:textAppearance="?android:textAppearanceMedium"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loading_spinner"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
