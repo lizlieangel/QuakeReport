@@ -16,6 +16,7 @@
 package com.example.android.quakereport;
 
 import android.app.LoaderManager;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
@@ -25,7 +26,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +68,22 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
             }
         });
     }
+
+    @Override
+    public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Earthquake>> loader) {
+
+    }
+
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
         @Override
         protected List<Earthquake> doInBackground(String... urls) {
