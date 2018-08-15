@@ -41,26 +41,11 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-//        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-//        task.execute(USGS_REQUEST_URL);
-
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(EARTHQUAKE_LOADER, null, this);
-
-        // Create a fake list of earthquake locations.
-        /*ArrayList<Earthquake> earthquakes = new ArrayList<>();
-        earthquakes.add(new Earthquake("5.8", "San Francisco", "July 20, 2018"));
-        earthquakes.add(new Earthquake("6.2", "London", "Feb 12, 2018"));
-        earthquakes.add(new Earthquake("7.2","Tokyo", "Oct 14, 2018"));
-        earthquakes.add(new Earthquake("3.5","Mexico City", "Mar 16, 2018"));
-        earthquakes.add(new Earthquake("1.4","Moscow", "Jan 09, 2018"));
-        earthquakes.add(new Earthquake("4.4","Rio de Janeiro", "Jun 19, 2018"));
-        earthquakes.add(new Earthquake("5.6","Paris", "Aug 10, 2018"));*/
-//        ArrayList<Earthquake> earthquakes = QueryUtils.extractEarthquakes();
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
         adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
 
-//        final EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
         earthquakeListView.setAdapter(adapter);
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,11 +88,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
         @Override
         protected void onPostExecute(List<Earthquake> data) {
-            // Clear the adapter of previous earthquake data
             adapter.clear();
-
-            // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-            // data set. This will trigger the ListView to update.
             if (data != null && !data.isEmpty()) {
                 adapter.addAll(data);
             }
