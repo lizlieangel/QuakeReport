@@ -17,8 +17,11 @@ package com.example.android.quakereport;
 
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,15 +42,24 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     private EarthquakeAdapter adapter;
     private static final int EARTHQUAKE_LOADER = 1;
     private TextView emptyStateTextView;
+    private View loadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-
         emptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(EARTHQUAKE_LOADER, null, this);
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if(isConnected) {
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(EARTHQUAKE_LOADER, null, this);
+        } else {
+            loadingIndicator = findViewById(R.id.loading_spinner);
+            loadingIndicator.setVisibility(View.GONE);
+            emptyStateTextView.setText(R.string.no_internet);
+        }
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
         adapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
         earthquakeListView.setEmptyView(emptyStateTextView);
@@ -71,7 +83,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
-        View loadingIndicator = findViewById(R.id.loading_spinner);
+        loadingIndicator = findViewById(R.id.loading_spinner);
         loadingIndicator.setVisibility(View.GONE);
         emptyStateTextView.setText(R.string.no_earthquakes);
         adapter.clear();
