@@ -127,7 +127,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         String displayTime = timeFormat(date);
         timeView.setText(displayTime);
 
-
         return listItemView;
     }
 }
