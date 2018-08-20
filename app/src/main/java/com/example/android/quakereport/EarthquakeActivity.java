@@ -94,7 +94,7 @@ public class    EarthquakeActivity extends AppCompatActivity implements LoaderMa
         uriBuilder.appendQueryParameter("format", "geojson");
         uriBuilder.appendQueryParameter("limit", "10");
         uriBuilder.appendQueryParameter("minmag", minMagnitude);
-        uriBuilder.appendQueryParameter("orderby", "orderby");
+        uriBuilder.appendQueryParameter("orderby", orderBy);
         return new EarthquakeLoader(this, uriBuilder.toString());
     }
 
